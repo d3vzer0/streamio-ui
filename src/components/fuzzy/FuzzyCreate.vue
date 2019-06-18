@@ -2,15 +2,15 @@
   <b-card>
     <b-form method="get" @submit.prevent="create_fuzzy">
       <b-row>
-        <b-col cols="9">
+        <b-col cols="11">
           <b-form-input type="text" v-model.lazy="fuzzy_value" placeholder="Fuzzy String" required></b-form-input>
         </b-col>
-         <b-col cols="1">
+         <!-- <b-col cols="1">
           <b-form-input type="text" v-model.lazy="fuzzy_likelihood" placeholder="%" required></b-form-input>
         </b-col>
         <b-col cols="1">
           <b-form-input type="text" v-model.lazy="fuzzy_score" placeholder="Score" required></b-form-input>
-        </b-col>
+        </b-col> -->
         <b-col class="text-right">
           <b-button type="submit" variant="primary" required><font-awesome-icon icon="plus" /></b-button>
         </b-col>

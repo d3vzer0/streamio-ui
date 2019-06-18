@@ -2,12 +2,12 @@
   <b-card header-tag="header">
     <b-form method="post" @submit.prevent="create_regex">
       <b-row>
-        <b-col cols="10">
+        <b-col cols="11">
           <b-form-input type="text" v-model.lazy="regex_value" placeholder="Regular Expression" required></b-form-input>
         </b-col>
-        <b-col cols="1">
+        <!-- <b-col cols="1">
           <b-form-input type="text" v-model.lazy="regex_score" placeholder="Score" required></b-form-input>
-        </b-col>
+        </b-col> -->
         <b-col class="text-right">
           <b-button type="submit" variant="primary" required><font-awesome-icon icon="plus" /></b-button>
         </b-col>

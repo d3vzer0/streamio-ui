@@ -2,7 +2,7 @@
   <masonry :cols="3" :gutter="40">
       <b-card class="screenshot-card" v-for="(screenshot, index) in screenshots" :key="index" :header="screenshot.domain" :img-src="screenshot.data">
         <b-row>
-          <b-col>
+          <b-col cols="3">
           URL
           </b-col>
           <b-col>
@@ -10,8 +10,8 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col>
-            Timestamp
+          <b-col cols="3">
+            Time
           </b-col>
           <b-col>
             {{from_unix(screenshot.timestamp["$date"])}}
@@ -91,6 +91,7 @@ export default {
  
 .card{
   margin-bottom: 20px;
+  word-break: break-all;
   &.active {
     border-color: #9e1d1d;
     border-width: 2px;
