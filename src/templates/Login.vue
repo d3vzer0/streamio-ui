@@ -54,7 +54,6 @@ export default {
         return
       }
 
-      this.$store.commit('auth/set_claims', response.data.access_token)
       this.$store.commit('auth/set_access_token', response.data.access_token)
       this.$store.commit('auth/set_refresh_token', response.data.refresh_token)
       this.$router.push('/home')

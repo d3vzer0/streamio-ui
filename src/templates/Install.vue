@@ -50,8 +50,9 @@ export default {
   methods: {
     login () {
       this.$http
-        .post("install", { username: this.username, password: this.password })
-        .then()
+        .post("setup", { username: this.username, password: this.password, password_confirm: this.password_confirm })
+        .then(response => this.$router.push('/login') )
+        .catch(response => this.$router.push('/login'))
     },
   }
 }
@@ -64,8 +65,6 @@ export default {
 #header-image {
   width: 100%;
 }
-
-// * {box-sizing: border-box;}
 
 #login-container {
   max-width: 80%;

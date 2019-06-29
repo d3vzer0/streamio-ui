@@ -5,15 +5,9 @@ export default {
   state: {
     access_token: localStorage.access_token || false,
     refresh_token: localStorage.refresh_token || false,
-    username: VueJwtDecode.decode(localStorage.access_token).identity || '',
-    role: VueJwtDecode.decode(localStorage.access_token).user_claims.role || '',
     refreshing_state: ''
   },
   mutations: {
-    set_claims (state, payload) {
-      state.username = VueJwtDecode.decode(payload).identity
-      state.role = VueJwtDecode.decode(payload).user_claims.role
-    },
     set_access_token (state, token) {
       localStorage.access_token = token
       state.access_token = token
@@ -36,7 +30,9 @@ export default {
   },
   getters: {
     claims (state) {
-      return { role: state.role, username: state.username }
+      var decoded_token = VueJwtDecode.decode(state.access_token)
+      return { role: decoded_token.user_claims.role,
+        username: decoded_token.identity }
     },
     refreshing_state (state) {
       return state.refreshing_state
