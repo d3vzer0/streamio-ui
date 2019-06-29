@@ -1,5 +1,7 @@
 <template>
     <div class="serverside-table">
+    <user-change></user-change>
+
     <b-table striped ref="detailstable" fixed hover :fields="output" :items="search_results" :current-page="current_page" :per-page="limit">
       <template slot="show_details" slot-scope="row">
           <b-button size="sm" @click.stop="row.toggleDetails" variant="primary" class="mr-2">
@@ -7,8 +9,13 @@
           </b-button>
       </template>
   
+      <template slot="show_change" slot-scope="row">
+        <b-button size="sm" variant="primary" v-on:click="change_user(row.item)"><font-awesome-icon icon="cog" /></b-button>
+      </template>
+
       <template slot="show_delete" slot-scope="row">
-        <b-button size="sm" variant="primary" class="mr-2" v-on:click="delete_filter(row.item)">Delete</b-button>
+        <b-button v-if="$store.getters['auth/claims'].role == 'admin'" size="sm" variant="primary" v-on:click="delete_filter(row.item)"><font-awesome-icon icon="trash" /></b-button>
+        <b-button  v-if="$store.getters['auth/claims'].role == 'user'" disabled size="sm" variant="primary" v-on:click="delete_filter(row.item)"><font-awesome-icon icon="trash" /></b-button>
       </template>
 
       <template slot="row-details" slot-scope="row">
@@ -39,6 +46,7 @@
 <script>
 import _ from 'lodash'
 import EventBus from '@/eventbus'
+import UserChange from "@/components/users/UserChange";
 
 export default {
   name: 'GenericTable',
@@ -106,11 +114,17 @@ export default {
       this.$http.delete(url_path)
         .then(response => this.get_results_filtered())
     },
+    change_user (user_data) {
+      EventBus.$emit('changeuser', user_data)
+    },
     from_unix (unix_timestamp) {
       var from_miliseconds = Math.floor(unix_timestamp / 1000)
       var datetime = this.$moment.unix(from_miliseconds).format('YYYY-MM-DD HH:mm:ss')
       return datetime
     }
+  },
+  components: {
+    UserChange,
   }
 };
 </script>

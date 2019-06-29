@@ -37,6 +37,14 @@
             </b-link>
           </b-nav-item>
         </b-nav>
+        <hr>
+        <b-nav vertical id="sidebar-nav" class="sidebar-nav-links" v-if="$store.getters['auth/claims'].role == 'admin'">
+          <b-nav-item class="nav-item">
+            <b-link to="/users" active-class="active">
+              <span class="nav-item-icon"><font-awesome-icon icon="user" /></span>
+            </b-link>
+          </b-nav-item>
+        </b-nav>
       </b-col>
 
       <b-col id="col-main">

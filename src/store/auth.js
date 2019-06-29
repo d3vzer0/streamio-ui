@@ -5,8 +5,8 @@ export default {
   state: {
     access_token: localStorage.access_token || false,
     refresh_token: localStorage.refresh_token || false,
-    username: '',
-    role: '',
+    username: VueJwtDecode.decode(localStorage.access_token).identity || '',
+    role: VueJwtDecode.decode(localStorage.access_token).user_claims.role || '',
     refreshing_state: ''
   },
   mutations: {

@@ -1,5 +1,5 @@
 <template>
-  <b-card>
+  <b-card v-if="this.$store.getters['auth/claims'].role == 'admin'">
     <b-form method="get" @submit.prevent="create_fuzzy">
       <b-row>
         <b-col cols="11">

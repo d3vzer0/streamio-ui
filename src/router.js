@@ -4,12 +4,15 @@ import store from './store/index.js'
 
 import Main from './templates/Main.vue'
 import Login from './templates/Login.vue'
+import Install from './templates/Install.vue'
 
 import Hits from './views/Hits.vue'
 import Snapshots from './views/Snapshots.vue'
 import Whitelist from './views/Whitelist.vue'
 import Regex from './views/Regex.vue'
 import Fuzzy from './views/Fuzzy.vue'
+
+import Users from './views/Users.vue'
 
 
 Vue.use(Router)
@@ -48,6 +51,11 @@ const router = new Router({
           path: '/fuzzy',
           name: 'Fuzzy',
           component: Fuzzy
+        },
+        {
+          path: '/users',
+          name: 'Users',
+          component: Users
         }
       ]
     },
@@ -57,25 +65,30 @@ const router = new Router({
       component: Login
     },
     {
+      path: '/install',
+      name: 'Install',
+      component: Install
+    },
+    {
       path: '*',
       redirect: '/'
     }
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (!store.getters['auth/access_token']) {
-//       next({
-//         path: '/login',
-//         query: { redirect: to.fillPath }
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next()
-//   }
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!store.getters['auth/access_token']) {
+      next({
+        path: '/login',
+        query: { redirect: to.fillPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
 
 export default router

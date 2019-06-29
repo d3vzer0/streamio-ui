@@ -1,5 +1,5 @@
 <template>
-  <b-card header-tag="header">
+  <b-card header-tag="header" v-if="this.$store.getters['auth/claims'].role == 'admin'">
     <b-form method="post" @submit.prevent="create_regex">
       <b-row>
         <b-col cols="11">

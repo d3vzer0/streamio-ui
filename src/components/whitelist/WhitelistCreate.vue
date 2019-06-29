@@ -1,5 +1,5 @@
 <template>
-  <b-card header-tag="header">
+  <b-card v-if="this.$store.getters['auth/claims'].role == 'admin'">
     <b-form method="get" @submit.prevent="create_whitelist()">
       <b-row>
          <b-col cols="11">
@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     create_whitelist () {
-      // console.log(1)
       this.$http.post('whitelist', { value: this.whitelist_domain })
         .then(EventBus.$emit('refreshtable', this.search_filter)
       )

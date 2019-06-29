@@ -2,7 +2,7 @@
   <b-container fluid id="login-container">
     <b-row class="justify-content-md-center top-50">
       <b-col xl="4" lg="5" md="6" sm="8" xs="9" class="center-block">
-        <b-card header="Authentication" header-tag="header" id="card-login">
+        <b-card header="Create user" header-tag="header" id="card-login">
           <!-- <div id="card-login-header">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
           </div> -->
@@ -17,9 +17,14 @@
                 <b-form-input type="password" class="input-field" v-model="password" required placeholder="Password"></b-form-input>
               </b-col>
             </b-row>
+            <b-row class="top-10">
+              <b-col cols="12">
+                <b-form-input type="password" class="input-field" v-model="password_confirm" required placeholder="Confirm Password"></b-form-input>
+              </b-col>
+            </b-row>
             <b-row>
               <b-col cols="12" class="top-10">
-                <b-button type="submit" variant="primary" class="fullwidth">Submit</b-button>
+                <b-button type="submit" variant="primary" class="fullwidth">Create</b-button>
               </b-col>
             </b-row>
           </b-form>
@@ -38,32 +43,16 @@ export default {
     return {
       username: '',
       password: '',
+      password_confirm: '',
       error: false
     };
   },
   methods: {
     login () {
       this.$http
-        .post("login", { username: this.username, password: this.password })
-        .then(response => this.login_success(response))
-        .catch(response => this.login_failed(response))
+        .post("install", { username: this.username, password: this.password })
+        .then()
     },
-    login_success (response) {
-      if (!response.data.access_token) {
-        this.login_failed()
-        return
-      }
-
-      this.$store.commit('auth/set_claims', response.data.access_token)
-      this.$store.commit('auth/set_access_token', response.data.access_token)
-      this.$store.commit('auth/set_refresh_token', response.data.refresh_token)
-      this.$router.push('/home')
-    },
-    login_failed (response) {
-      this.error = 'Unable to login'
-      this.$store.commit('auth/delete_access_token')
-      this.$store.commit('auth/delete_refresh_token')
-    }
   }
 }
 </script>
