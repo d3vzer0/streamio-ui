@@ -13,11 +13,6 @@
         </b-col>
       </b-row>
       <b-row class="top-10">
-        <b-col>
-          <b-form-select :options="role_options" v-model="role"/>
-        </b-col>
-      </b-row>
-      <b-row class="top-10">
         <b-col> 
           <b-button type="submit" variant="primary" class="fullwidth">Update</b-button>
         </b-col>
@@ -39,14 +34,11 @@ export default {
       username: '',
       password: '',
       confirm_password: '',
-      role: '',
-      role_options: ['user', 'admin']
     };
   },
   mounted() {
     EventBus.$on("changeuser", user_data => {
       this.username = user_data.username;
-      this.role = user_data.role;
       this.$refs.changepass.show();
     });
   },
@@ -54,12 +46,12 @@ export default {
     delete_user() {
       var user_url = `user/${this.username}`
       this.$http.delete(user_url)
-        .then(this.$refs.changepass.hide())
+        .then(this.$refs.changepass.hide(), EventBus.$emit('refreshtable', ''))
     },
     change_user() {
-      var user_url = `user/${this.username}`
+      var user_url = `user/${this.username}/password`
       if (this.confirm_password === this.password ) {
-        var post_data = {username:this.username, password:this.password, password_confirm:this.confirm_password, role:this.role}
+        var post_data = {username:this.username, password:this.password, password_confirm:this.confirm_password}
         this.$http.put(user_url, post_data)
           .then(this.$refs.changepass.hide())
       }

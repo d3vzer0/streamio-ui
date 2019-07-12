@@ -45,7 +45,7 @@ export default {
   methods: {
    create_user () {
     this.$http.post('users', { username: this.username, password: this.password, password_confirm: this.password_confirm })
-      .then(console.log(1))
+      .then(EventBus.$emit('refreshtable', ''))
     },
   }
 }
