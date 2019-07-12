@@ -28,7 +28,7 @@
         <b-row>
           <b-col><b>Monitoring</b></b-col>
           <b-col>
-            <b-form-checkbox v-model="row.item.enabled" switch>
+            <b-form-checkbox v-model="row.item.enabled" switch @change="change_monitor(row.item)">
             </b-form-checkbox><br/>
           </b-col>
         </b-row>
@@ -133,6 +133,9 @@ export default {
     unconfirm_match (item) {
       this.$http.post('confirm', { 'action':false, 'url':item.url} )
         .then(response => this.get_results_filtered())
+    },
+    change_monitor (item) {
+      this.$http.post('monitor', { 'action':!item.enabled, 'url':item.url} )
     },
     change_user (user_data) {
       EventBus.$emit('changeuser', user_data)

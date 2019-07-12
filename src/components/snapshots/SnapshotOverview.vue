@@ -72,7 +72,7 @@ export default {
     },
     download_image (element) {
       var image_id = element.screenshot['$oid']
-      var image_url = `${axios.defaults.baseURL}/snapshot/${image_id}`
+      var image_url = `${axios.defaults.baseURL}snapshot/${image_id}`
       return this.$http.get(image_url, { responseType: 'arraybuffer'}).then(response => {
         var img_object = new Buffer(response.data, 'binary').toString('base64')
         var img_src = 'data:image/png;base64, ' + img_object
