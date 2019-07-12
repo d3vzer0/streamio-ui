@@ -9,10 +9,15 @@
           <b-badge href="#" v-on:click="confirm_match(row.item)" v-else variant="secondary">Unknown</b-badge>
       </template>
 
+      <!-- Confirmation template for matches -->
+       <template slot="url" slot-scope="row">
+         <span v-on:click="search_url(row.item)"><font-awesome-icon icon="search" /></span> {{row.item.url}} 
+      </template>
+
       <!-- Details / custom templates for matches -->
       <template slot="show_details" slot-scope="row">
           <b-button size="sm" @click.stop="row.toggleDetails" variant="primary" class="mr-2">
-            {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
+            Details
           </b-button>
       </template>
   
@@ -46,7 +51,7 @@
         <b-button size="sm" variant="primary" v-on:click="change_user(row.item)"><font-awesome-icon icon="cog" /></b-button>
       </template>
 
-        <!-- Change templates for user management -->
+      <!-- Change templates for user management -->
       <template slot="role" slot-scope="row">
         <b-form-select v-model="row.item.role" :options="['admin', 'user']" @change="change_role(row.item)"></b-form-select>
       </template>
@@ -100,7 +105,12 @@ export default {
         skip: skip_results, 
         limit: this.limit
       }
-      if (this.search_filter != '') {
+      console.log(this.monitored)
+      if (this.search_filter != '' || this.$store.getters['target/monitored'] || this.$store.getters['target/confirmed']) {
+        query_params.monitored = this.$store.getters['target/monitored']
+        query_params.confirmed = this.$store.getters['target/confirmed']
+        console.log(this.$store.getters['target/monitored'])
+        console.log(this.$store.getters['target/confirmed'])
         query_params.search= this.search_filter
       }
       this.$http
@@ -155,6 +165,10 @@ export default {
       this.$http.put(url_path, { 'role': item.role } )
         .then(response => this.get_results_filtered())
     },
+    search_url (item) {
+      this.$store.commit('target/update_domain', item.url)
+      this.$router.push('/snapshots')
+    },
     from_unix (unix_timestamp) {
       var from_miliseconds = Math.floor(unix_timestamp / 1000)
       var datetime = this.$moment.unix(from_miliseconds).format('YYYY-MM-DD HH:mm:ss')
@@ -184,7 +198,7 @@ export default {
   width: 10%
 }
 .col-details {
-  width: 12%
+  width: 8%
 }
  
 </style>

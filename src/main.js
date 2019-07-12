@@ -7,7 +7,9 @@ import { store } from '@/store'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-import { faPlus, faTrash, faSearch, faExclamationTriangle, faCertificate, faFish, faUserSecret, faUnlock, faUser, faHeart, faTextWidth, faPercent, faCog, faBullseye, faCameraRetro, faPercentage } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faTrash, faFilter, faSearch, faExclamationTriangle,
+  faCertificate, faFish, faUserSecret, faUnlock, faUser, faHeart, faTextWidth,
+  faPercent, faCog, faBullseye, faCameraRetro, faPercentage } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faTrash,
@@ -17,6 +19,7 @@ library.add(
   faUserSecret,
   faHeart,
   faTextWidth,
+  faFilter,
   faPercent,
   faCog,
   faBullseye,
