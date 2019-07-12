@@ -2,7 +2,12 @@
     <div class="serverside-table">
     <user-change></user-change>
 
-    <b-table striped ref="detailstable" fixed hover :fields="output" :items="search_results" :current-page="current_page" :per-page="limit">
+    <b-table striped ref="detailstable" responsive hover :fields="output" :items="search_results" :current-page="current_page" :per-page="limit">
+       <template slot="confirmed" slot-scope="row">
+          <b-badge href="#" v-on:click="unconfirm_match(row.item)" v-if="row.item.confirmed" variant="danger">Confirmed</b-badge>
+          <b-badge href="#" v-on:click="confirm_match(row.item)" v-else variant="secondary">Unknown</b-badge>
+      </template>
+
       <template slot="show_details" slot-scope="row">
           <b-button size="sm" @click.stop="row.toggleDetails" variant="primary" class="mr-2">
             {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
@@ -20,6 +25,13 @@
 
       <template slot="row-details" slot-scope="row">
       <b-card v-if="row.item.datasource == 'transparency'">
+        <b-row>
+          <b-col><b>Monitoring</b></b-col>
+          <b-col>
+            <b-form-checkbox v-model="row.item.enabled" switch>
+            </b-form-checkbox><br/>
+          </b-col>
+        </b-row>
         <b-row >
           <b-col><b>Fingerprint</b></b-col>
           <b-col>{{row.item.details.fingerprint}}</b-col>
@@ -114,6 +126,14 @@ export default {
       this.$http.delete(url_path)
         .then(response => this.get_results_filtered())
     },
+    confirm_match (item) {
+      this.$http.post('confirm', { 'action':true, 'url':item.url})
+        .then(response => this.get_results_filtered())
+    },
+    unconfirm_match (item) {
+      this.$http.post('confirm', { 'action':false, 'url':item.url} )
+        .then(response => this.get_results_filtered())
+    },
     change_user (user_data) {
       EventBus.$emit('changeuser', user_data)
     },
@@ -128,3 +148,25 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.col-actions {
+  width:10%
+}
+.col-timestamp {
+  width: 18%
+}
+.col-datasource {
+  width: 12%
+}
+.col-source {
+  width: 12%
+}
+.col-pattern {
+  width: 10%
+}
+.col-details {
+  width: 12%
+}
+ 
+</style>

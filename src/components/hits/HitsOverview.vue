@@ -21,22 +21,25 @@ export default {
       target_url: 'hits',
       limit: 30,
       expected_fields: {
+        confirmed: 'confirmed',
         timestamp: 'timestamp.$date',
         url: 'url',
         pattern_match: 'matching.value',
         source_filter: 'matching.name',
         details: 'matching.data',
         datasource: 'datasource',
+        enabled: 'enabled',
         id: '_id.$oid',
         _showDetails: true
       },
       output: {
-        timestamp: { label: 'Timestamp' },
-        url: { label:'Url' },
-        datasource: { label:'Datasource' },
-        source_filter: { label: 'Filter type'},
-        pattern_match: { label:'Filter match' },
-        show_details: {label :'Details'}
+        confirmed: { label: '', tdClass: 'col-actions' },
+        timestamp: { label: 'Timestamp', tdClass: 'col-timestamp'},
+        url: { label:'Url', tdClass: '' },
+        datasource: { label:'Datasource', tdClass: 'col-datasource' },
+        source_filter: { label: 'Filter type', tdClass: 'col-source'},
+        pattern_match: { label:'Pattern', tdClass: 'col-pattern' },
+        show_details: {label :'Details', tdClass: 'col-details'}
       }
     }
   }
