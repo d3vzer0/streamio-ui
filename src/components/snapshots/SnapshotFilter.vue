@@ -1,29 +1,29 @@
 <template>
-  <b-card>
-    <b-form method="get" @submit.prevent="filter_hits">
-      <b-row>
-        <b-col xl="10" md="10" cols="12">
-          <b-form-input type="text" v-model="search_filter" placeholder="Domain"></b-form-input>
-        </b-col>
-        <b-col>
-          <b-button type="submit" variant="primary" class="fullwidth"><font-awesome-icon icon="search" /></b-button>
-        </b-col>
-        <b-col>
-          <b-button id="show-filter-popover-snapshot" variant="primary"><font-awesome-icon icon="filter" /></b-button>
-          <b-popover placement="bottom" target="show-filter-popover-snapshot">
+  <div id="filter-snapshots">
+    <b-row id="filter-snapshots-search">
+      <b-col cols="12">
+        <b-card>
+          <b-form method="get" @submit.prevent="filter_hits">
             <b-row>
-              <b-col>Confirmed</b-col>
-              <b-col cols="4"><b-form-checkbox v-model="filter_confirmed" switch></b-form-checkbox></b-col>
+              <b-col xl="11" md="10" cols="12">
+                <b-form-input type="text" v-model="search_filter" placeholder="Domain"></b-form-input>
+              </b-col>
+              <b-col>
+                <b-button type="submit" variant="primary" class="fullwidth"><font-awesome-icon icon="search" /></b-button>
+              </b-col>
             </b-row>
-            <b-row>
-              <b-col>Monitored</b-col>
-              <b-col cols="4"><b-form-checkbox v-model="filter_monitored" switch></b-form-checkbox></b-col>
-            </b-row>
-          </b-popover>
-        </b-col>
-      </b-row>
-    </b-form>
-  </b-card>
+          </b-form>
+        </b-card>
+      </b-col>
+    </b-row>
+     <b-row id="hits-filter-badges">
+      <b-col cols="12">
+        <b-badge class="filter-badge" v-if="filter_unique" pill v-on:click="filter_unique=false, filter_hits()" href="#" variant="light">Unique</b-badge>
+        <b-badge class="filter-badge" v-else pill href="#" v-on:click="filter_unique=true, filter_hits()" variant="light">Non Unique</b-badge>
+      </b-col>
+    </b-row>
+    <br/>
+  </div>
 </template>
 
 <script>
@@ -46,26 +46,17 @@ export default {
         this.$store.commit('target/update_domain', value)
       }
     },
-    filter_monitored: {
+    filter_unique: {
       get () {
-        return this.$store.getters['target/monitored']
+        return this.$store.getters['target/unique']
       },
       set (value) {
-        this.$store.commit('target/filter_monitored', value)
+        this.$store.commit('target/filter_unique', value)
       }
     },
-    filter_confirmed: {
-      get () {
-        return this.$store.getters['target/confirmed']
-      },
-      set (value) {
-        this.$store.commit('target/filter_confirmed', value)
-      }
-    }
   },
   methods: {
     filter_hits () {
-      console.log(1)
       EventBus.$emit('refreshscreenshots', this.search_filter)
     }
   } 

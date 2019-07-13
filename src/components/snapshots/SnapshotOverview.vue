@@ -1,20 +1,31 @@
 <template>
   <masonry :cols="3" :gutter="40">
-      <b-card class="screenshot-card" v-for="(screenshot, index) in screenshots" :key="index" :header="screenshot.domain" :img-src="screenshot.data">
+      <b-card class="screenshot-card" v-for="(screenshot, index) in screenshots" :key="index" :img-src="screenshot.data">
         <b-row>
           <b-col cols="3">
           URL
           </b-col>
-          <b-col>
+          <b-col v-if="!filter_unique">
             {{screenshot.url}}
           </b-col>
+          <b-col v-else>
+            {{screenshot._id.url}}
+          </b-col>
         </b-row>
-        <b-row>
+        <b-row v-if="screenshot.timestamp">
           <b-col cols="3">
             Time
           </b-col>
           <b-col>
             {{from_unix(screenshot.timestamp["$date"])}}
+          </b-col>
+        </b-row>
+        <b-row v-else>
+          <b-col cols="3">
+            First Seen
+          </b-col>
+          <b-col>
+            {{from_unix(screenshot.firstSeen["$date"])}}
           </b-col>
         </b-row>
       </b-card>
@@ -33,12 +44,17 @@ export default {
   name: 'ScreenshotsOverview',
   data(){
     return {
-      myimage: '',
       screenshots: [],
       screenshot_data: {},
       search_value: this.$store.getters['target/domain'],
       error: '',
-      jawatnu: ''
+    }
+  },
+  computed: {
+    filter_unique: {
+      get () {
+        return this.$store.getters['target/unique']
+      }
     }
   },
   created (){
@@ -52,11 +68,11 @@ export default {
   },
   methods: {
     get_screenshots () {
-      this.$http
-        .get('snapshots', {params:{search:this.search_value}})
-        .then(response => this.parse_screenshots(response))
+        this.$http
+        .get('snapshots', {params:{search:this.search_value, distinct: this.filter_unique}})
+          .then(response => this.parse_screenshots(response))
      },
-     parse_screenshots (response) {
+    parse_screenshots (response) {
       this.screenshots = []
       for (let [index, element] of response.data.entries()) {
         var img_data = this.download_image(element).then(response => {
