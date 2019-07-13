@@ -4,12 +4,12 @@
       <div class="alert alert-danger" v-if="error">{{ error }}</div>
       <b-row>
         <b-col>
-          <b-form-input type="password" v-model="password" placeholder="New Password"></b-form-input>
+          <b-form-input type="password" required v-model="password" placeholder="New Password"></b-form-input>
         </b-col>
       </b-row>
       <b-row class="top-10">
         <b-col>
-          <b-form-input type="password" v-model="confirm_password" placeholder="Confirm New Password"></b-form-input>
+          <b-form-input type="password" required v-model="confirm_password" placeholder="Confirm New Password"></b-form-input>
         </b-col>
       </b-row>
       <b-row class="top-10">
@@ -38,7 +38,7 @@ export default {
   },
   mounted() {
     EventBus.$on("changeuser", user_data => {
-      this.username = user_data.username;
+      this.username = user_data.username;     
       this.$refs.changepass.show();
     });
   },
@@ -49,8 +49,8 @@ export default {
         .then(this.$refs.changepass.hide(), EventBus.$emit('refreshtable', ''))
     },
     change_user() {
-      var user_url = `user/${this.username}/password`
       if (this.confirm_password === this.password ) {
+        var user_url = `user/${this.username}/password`
         var post_data = {username:this.username, password:this.password, password_confirm:this.confirm_password}
         this.$http.put(user_url, post_data)
           .then(this.$refs.changepass.hide())

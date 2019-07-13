@@ -6,10 +6,10 @@
           <b-form-input type="text" v-model.lazy="username" placeholder="Username" required></b-form-input>
         </b-col>
         <b-col cols="3">
-          <b-form-input type="password" v-model.lazy="password" placeholder="Password" required></b-form-input>
+          <b-form-input type="password" v-model.lazy="password" :state="password_state"  placeholder="Password" required></b-form-input>
         </b-col>
         <b-col cols="3">
-          <b-form-input type="password" v-model.lazy="password_confirm" placeholder="Confirm password" required></b-form-input>
+          <b-form-input type="password" v-model.lazy="password_confirm" :state="password_state" placeholder="Confirm password" required></b-form-input>
         </b-col>
         <b-col cols="2">
           <b-form-select v-model.lazy="role" :options="roles" placeholder="Role" required></b-form-select>
@@ -41,7 +41,11 @@ export default {
         ]
     }
   },
-  
+  computed: {
+    password_state() {
+      return this.password ===  this.password_confirm ? true : false
+    }
+  },
   methods: {
    create_user () {
     this.$http.post('users', { username: this.username, password: this.password, password_confirm: this.password_confirm })

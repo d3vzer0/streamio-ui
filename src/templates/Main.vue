@@ -3,6 +3,7 @@
     <b-alert :show="dismiss_countDown" variant="primary" @dismissed="dismiss_countDown=0" @dismiss-count-down="countDownChanged">
       {{this.alert_message}}
     </b-alert>
+    <user-pass></user-pass>
     <b-row id="row-main">
           <!-- <img src="@/assets/reternal.png" id="sidebar-header-image"> -->
       <b-col xl="1" lg="1" md="1" sm="1" cols="1" id="col-sidebar">
@@ -56,6 +57,7 @@
                 <template slot="button-content">
                 <font-awesome-icon icon="cog" />
                 </template>
+                <b-dropdown-item @click="change_pass" href="#">Change Pass</b-dropdown-item>
                 <b-dropdown-item @click="logout" href="#">Signout</b-dropdown-item>
               </b-nav-item-dropdown>
             </b-navbar-nav>
@@ -79,6 +81,7 @@
 <script>
 
 import EventBus from '@/eventbus'
+import UserPass from '@/components/users/UserPass'
 
 export default {
   name: 'Main',
@@ -109,9 +112,15 @@ export default {
       this.$store.commit('auth/delete_access_token')
       this.$router.push('/login')
     },
+    change_pass () {
+      EventBus.$emit('changepass', false)
+    },
     show_alert () {
       this.dismiss_countDown = this.dismiss_secs;
     }
+  },
+  components: {
+    UserPass,
   }
 };
 </script>
