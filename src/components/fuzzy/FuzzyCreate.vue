@@ -37,7 +37,7 @@ export default {
   methods: {
    create_fuzzy(){
      this.$http.post('filters/fuzzy', { value: this.fuzzy_value, score: this.fuzzy_score, likelihood: this.fuzzy_likelihood })
-      .then(EventBus.$emit('refreshtable', this.search_filter)) 
+      .then(response => EventBus.$emit('refreshtable', this.search_filter)) 
    }
   },
   mounted (){

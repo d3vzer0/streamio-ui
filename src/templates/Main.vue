@@ -45,14 +45,21 @@
               <span class="nav-item-icon"><font-awesome-icon icon="user" /></span>
             </b-link>
           </b-nav-item>
+          <b-nav-item class="nav-item">
+            <b-link to="/state" active-class="active">
+              <span class="nav-item-icon"><font-awesome-icon icon="info-circle" /></span>
+            </b-link>
+          </b-nav-item>
         </b-nav>
       </b-col>
+
 
       <b-col id="col-main">
         <b-row id="row-navbar">
           <b-col cols="12">
            <b-navbar toggleable="md" type="light" variant="platinum" >
             <b-navbar-nav class="ml-auto">
+
               <b-nav-item-dropdown right>
                 <template slot="button-content">
                 <font-awesome-icon icon="cog" />

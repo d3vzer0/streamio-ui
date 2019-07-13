@@ -34,7 +34,7 @@ export default {
   methods: {
    create_regex () {
     this.$http.post('filters/regex', { value: this.regex_value, score: this.regex_score })
-      .then(EventBus.$emit('refreshtable', this.search_filter)
+      .then(response => EventBus.$emit('refreshtable', this.search_filter)
       )
     }
   }

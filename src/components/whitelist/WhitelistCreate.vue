@@ -29,7 +29,7 @@ export default {
   methods: {
     create_whitelist () {
       this.$http.post('whitelist', { value: this.whitelist_domain })
-        .then(EventBus.$emit('refreshtable', this.search_filter)
+        .then(response => EventBus.$emit('refreshtable', this.search_filter)
       )
     }
   }

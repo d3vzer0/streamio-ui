@@ -9,13 +9,14 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faPlus, faTrash, faFilter, faSearch, faExclamationTriangle,
   faCertificate, faFish, faUserSecret, faUnlock, faUser, faHeart, faTextWidth,
-  faPercent, faCog, faBullseye, faCameraRetro, faPercentage } from '@fortawesome/free-solid-svg-icons'
+  faPercent, faCog, faBullseye, faCameraRetro, faPercentage, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faTrash,
   faExclamationTriangle,
   faCertificate,
   faFish,
+  faInfoCircle,
   faUserSecret,
   faHeart,
   faTextWidth,

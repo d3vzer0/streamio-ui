@@ -11,6 +11,7 @@ import Snapshots from './views/Snapshots.vue'
 import Whitelist from './views/Whitelist.vue'
 import Regex from './views/Regex.vue'
 import Fuzzy from './views/Fuzzy.vue'
+import State from './views/State.vue'
 
 import Users from './views/Users.vue'
 
@@ -27,6 +28,11 @@ const router = new Router({
         requiresAuth: true
       },
       children: [
+        {
+          path: '/state',
+          name: 'State',
+          component: State
+        },
         {
           path: '/hits',
           name: 'Hits',
