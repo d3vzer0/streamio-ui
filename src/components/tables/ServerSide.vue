@@ -1,8 +1,11 @@
 <template>
     <div class="serverside-table">
     <user-change></user-change>
-
-    <b-table striped ref="detailstable" responsive hover :fields="output" :items="search_results" :current-page="current_page" :per-page="limit">
+    <!-- <div v-for="result in search_results">
+      {{result}}
+    </div> -->
+    
+    <b-table striped ref="detailstable"  hover :fields="output" :items="search_results" :current-page="current_page" :per-page="0">
       <!-- Confirmation template for matches -->
        <template slot="confirmed" slot-scope="row">
           <b-badge href="#" v-on:click="unconfirm_match(row.item)" v-if="row.item.confirmed" variant="danger">Confirmed</b-badge>
@@ -105,13 +108,10 @@ export default {
         skip: skip_results, 
         limit: this.limit
       }
-      console.log(this.monitored)
       if (this.search_filter != '' || this.$store.getters['target/monitored'] || this.$store.getters['target/confirmed']) {
         query_params.monitored = this.$store.getters['target/monitored']
         query_params.confirmed = this.$store.getters['target/confirmed']
-        console.log(this.$store.getters['target/monitored'])
-        console.log(this.$store.getters['target/confirmed'])
-        query_params.search= this.search_filter
+        query_params.search = this.search_filter
       }
       this.$http
         .get(this.target, { params:query_params })
@@ -132,6 +132,8 @@ export default {
         }
         this.search_results.push(field_mapping)
       });
+      this.$refs.detailstable.refresh();
+
     },
     delete_filter (item) {
       if (this.type === 'whitelist') {
