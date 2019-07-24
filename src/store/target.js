@@ -5,6 +5,7 @@ export default {
       monitored: false,
       confirmed: false,
       unique: false,
+      tags: []
     },
     mutations: {
       update_domain (state, payload) {
@@ -18,6 +19,9 @@ export default {
       },
       filter_unique (state, payload) {
         state.unique = payload
+      },
+      filter_tags (state, payload) {
+        state.tags = payload
       }
     },
     getters: {
@@ -32,6 +36,9 @@ export default {
       },
       confirmed (state) {
         return state.confirmed
+      },
+      tags (state) {
+        return state.tags
       }
     }
   }

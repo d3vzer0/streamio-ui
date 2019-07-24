@@ -18,11 +18,11 @@
     </b-row>
     <b-row id="hits-filter-badges">
       <b-col cols="12">
-        <b-badge class="filter-badge" v-if="filter_confirmed" pill v-on:click="filter_confirmed=false, filter_hits()" href="#" variant="light">Confirmed</b-badge>
-        <b-badge class="filter-badge" v-else pill href="#" v-on:click="filter_confirmed=true, filter_hits()" variant="light">Unknown</b-badge>
-
-        <b-badge class="filter-badge" pill href="#" v-if="filter_monitored" v-on:click="filter_monitored=false, filter_hits()" variant="light">Enabled</b-badge>
-        <b-badge class="filter-badge" pill href="#" v-else v-on:click="filter_monitored=true, filter_hits()" variant="light">Disabled</b-badge>
+        <b-form-group>
+          <b-form-checkbox-group v-model="filter_tags" :options="options"
+             buttons button-variant="light">
+          </b-form-checkbox-group>
+        </b-form-group>
 
       </b-col>
     </b-row>
@@ -38,6 +38,11 @@ export default {
   name: 'HitsFilter',
   data(){
     return {
+      options: [
+        { text: 'false-positive', value: 'false-positive' },
+        { text: 'true-positive', value: 'true-positive' },
+        { text: 'enabled', value: 'enabled' },
+      ]
     }
   },
   beforeDestroy () {
@@ -50,6 +55,15 @@ export default {
       },
       set (value) {
         this.$store.commit('target/update_domain', value)
+      }
+    },
+    filter_tags: {
+      get () {
+        return this.$store.getters['target/tags']
+      },
+      set (value) {
+        this.$store.commit('target/filter_tags', value)
+        this.filter_hits()
       }
     },
     filter_monitored: {

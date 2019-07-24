@@ -7,9 +7,11 @@
     
     <b-table striped ref="detailstable"  hover :fields="output" :items="search_results" :current-page="current_page" :per-page="0">
       <!-- Confirmation template for matches -->
-       <template slot="confirmed" slot-scope="row">
-          <b-badge href="#" v-on:click="unconfirm_match(row.item)" v-if="row.item.confirmed" variant="danger">Confirmed</b-badge>
-          <b-badge href="#" v-on:click="confirm_match(row.item)" v-else variant="secondary">Unknown</b-badge>
+      <template slot="confirmed" slot-scope="row">
+        <b-dropdown size="sm" variant="primary" text="Confirm" class="m-2">
+          <b-dropdown-item-button v-on:click="confirm(row.item)">True Positive</b-dropdown-item-button>
+          <b-dropdown-item-button v-on:click="unconfirm_match(row.item)">False Positive</b-dropdown-item-button>
+        </b-dropdown>
       </template>
 
       <!-- Confirmation template for matches -->
@@ -108,11 +110,12 @@ export default {
         skip: skip_results, 
         limit: this.limit
       }
-      if (this.search_filter != '' || this.$store.getters['target/monitored'] || this.$store.getters['target/confirmed']) {
-        query_params.monitored = this.$store.getters['target/monitored']
-        query_params.confirmed = this.$store.getters['target/confirmed']
+
+       if (this.search_filter != '' || this.$store.getters['target/tags']) {
+        query_params.tags = this.$store.getters['target/tags']
         query_params.search = this.search_filter
       }
+
       this.$http
         .get(this.target, { params:query_params })
         .then(response => this.parse_results_filtered(response))
@@ -149,11 +152,13 @@ export default {
         .then(response => this.get_results_filtered())
     },
     confirm_match (item) {
-      this.$http.post('confirm', { 'action':true, 'url':item.url})
+      this.$http.post('tags', { 'action':false, 'url':item.url, 'tag':'false-positive'})
+      this.$http.post('tags', { 'action':true, 'url':item.url, 'tag':'true-positive'})
         .then(response => this.get_results_filtered())
     },
     unconfirm_match (item) {
-      this.$http.post('confirm', { 'action':false, 'url':item.url} )
+      this.$http.post('tags', { 'action':false, 'url':item.url, 'tag':'true-positive'})
+      this.$http.post('tags', { 'action':true, 'url':item.url, 'tag':'false-positive'} )
         .then(response => this.get_results_filtered())
     },
     change_monitor (item) {
