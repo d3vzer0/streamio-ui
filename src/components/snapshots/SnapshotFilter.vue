@@ -18,8 +18,12 @@
     </b-row>
      <b-row id="hits-filter-badges">
       <b-col cols="12">
-        <b-badge class="filter-badge" v-if="filter_unique" pill v-on:click="filter_unique=false, filter_hits()" href="#" variant="light">Unique</b-badge>
-        <b-badge class="filter-badge" v-else pill href="#" v-on:click="filter_unique=true, filter_hits()" variant="light">Non Unique</b-badge>
+        <b-form-group>
+          <b-form-radio-group @change="filter_hits()" v-model="filter_unique"
+            :options="options" buttons button-variant="light"></b-form-radio-group>
+        </b-form-group>
+        <!-- <b-badge class="filter-badge" v-if="filter_unique" pill v-on:click="filter_unique=false, filter_hits()" href="#" variant="light">Unique</b-badge>
+        <b-badge class="filter-badge" v-else pill href="#" v-on:click="filter_unique=true, filter_hits()" variant="light">Non Unique</b-badge> -->
       </b-col>
     </b-row>
     <br/>
@@ -35,6 +39,10 @@ export default {
   name: 'HitsFilter',
   data(){
     return {
+      options: [
+        { text: 'Unique', value: false },
+        { text: 'Non Unique', value: true }
+      ]
     }
   },
   computed: {
@@ -62,3 +70,14 @@ export default {
   } 
 }
 </script>
+
+
+<style lang="scss">
+
+#hits-filter-badges {
+  .btn {
+    font-size: 12px;
+  }
+}
+
+</style>

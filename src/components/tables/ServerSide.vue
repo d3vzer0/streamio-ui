@@ -163,6 +163,8 @@ export default {
     },
     change_monitor (item) {
       this.$http.post('monitor', { 'action':!item.enabled, 'url':item.url} )
+      this.$http.post('tags', { 'action':!item.enabled, 'url':item.url, 'tag':'monitored'} )
+        .then(response => this.get_results_filtered())
     },
     change_user (user_data) {
       EventBus.$emit('changeuser', user_data)

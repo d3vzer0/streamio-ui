@@ -39,9 +39,9 @@ export default {
   data(){
     return {
       options: [
-        { text: 'false-positive', value: 'false-positive' },
-        { text: 'true-positive', value: 'true-positive' },
-        { text: 'enabled', value: 'enabled' },
+        { text: 'False positive', value: 'false-positive' },
+        { text: 'True positive', value: 'true-positive' },
+        { text: 'Monitored', value: 'monitored' },
       ]
     }
   },
@@ -97,6 +97,12 @@ export default {
   font-size: 12px;
   padding: 7px;
   margin-right:20px;
+}
+
+#hits-filter-badges {
+  .btn {
+    font-size: 12px;
+  }
 }
 
 </style>
