@@ -9,7 +9,7 @@
       <!-- Confirmation template for matches -->
       <template slot="confirmed" slot-scope="row">
         <b-dropdown size="sm" variant="primary" text="Confirm" class="m-2">
-          <b-dropdown-item-button v-on:click="confirm(row.item)">True Positive</b-dropdown-item-button>
+          <b-dropdown-item-button v-on:click="confirm_match(row.item)">True Positive</b-dropdown-item-button>
           <b-dropdown-item-button v-on:click="unconfirm_match(row.item)">False Positive</b-dropdown-item-button>
         </b-dropdown>
       </template>
