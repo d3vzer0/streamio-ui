@@ -12,6 +12,7 @@ import Whitelist from './views/Whitelist.vue'
 import Regex from './views/Regex.vue'
 import Fuzzy from './views/Fuzzy.vue'
 import State from './views/State.vue'
+import ImageCompare from './views/ImageCompare.vue'
 
 import Users from './views/Users.vue'
 
@@ -32,6 +33,11 @@ const router = new Router({
           path: '/state',
           name: 'State',
           component: State
+        },
+        {
+          path: '/imagecompare',
+          name: 'ImageCompare',
+          component: ImageCompare
         },
         {
           path: '/hits',
