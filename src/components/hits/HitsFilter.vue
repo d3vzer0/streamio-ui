@@ -39,11 +39,14 @@ export default {
   data(){
     return {
       options: [
-        { text: 'False positive', value: 'false-positive' },
-        { text: 'True positive', value: 'true-positive' },
-        { text: 'Monitored', value: 'monitored' },
+        // { text: 'False positive', value: 'false-positive' },
+        // { text: 'True positive', value: 'true-positive' },
+        // { text: 'Monitored', value: 'monitored' },
       ]
     }
+  },
+  mounted () {
+    this.get_tags()
   },
   beforeDestroy () {
     EventBus.$off('refreshtable')
@@ -86,6 +89,17 @@ export default {
   methods: {
     filter_hits () {
       EventBus.$emit('refreshtable', this.search_filter)
+    },
+    get_tags () {
+      this.$http
+        .get('tags')
+        .then(response => this.parse_tags(response.data))
+    },
+    parse_tags (response) {
+      response.forEach(element => {
+        this.options.push({'text':element, 'value':element})
+      });
+      // console.log(response)
     }
   } 
 }

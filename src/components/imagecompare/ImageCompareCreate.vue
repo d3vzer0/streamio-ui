@@ -2,13 +2,13 @@
   <b-card v-if="this.$store.getters['auth/claims'].role == 'admin'">
     <b-form method="get" @submit.prevent="create_imagecompare()">
       <b-row>
-         <b-col cols="8">
+         <b-col cols="6">
           <b-form-input type="text" v-model="compare_url" placeholder="URL" required></b-form-input>
         </b-col>
-        <b-col cols="2">
+        <b-col cols="3">
           <b-form-input type="text" v-model="compare_tag" placeholder="Tag" required></b-form-input>
         </b-col>
-        <b-col cols="1">
+        <b-col cols="2">
           <b-form-input type="text" v-model="compare_score" placeholder="Distance" required></b-form-input>
         </b-col>
          <b-col class="text-right">

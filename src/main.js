@@ -9,15 +9,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faPlus, faTrash, faFilter, faSearch, faExclamationTriangle,
   faCertificate, faFish, faUserSecret, faUnlock, faUser, faHeart, faTextWidth,
-  faPercent, faCog, faBullseye, faCameraRetro, faPercentage, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+  faPercent, faCog, faBullseye, faCameraRetro, faPercentage, faInfoCircle, faEye, faRedo } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
   faTrash,
+  faRedo,
   faExclamationTriangle,
   faCertificate,
   faFish,
   faInfoCircle,
   faUserSecret,
+  faEye,
   faHeart,
   faTextWidth,
   faFilter,
